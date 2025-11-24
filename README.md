@@ -56,6 +56,13 @@ curl -L https://github.com/iXorr/laravel-vue-sample/archive/refs/heads/pure-samp
    ```bash
    docker compose run --rm frontend npm install --dev vue-router
    ```
+
+   Если на какие-то из установленных папок у вас нет разрешения (что часто бывает в linux-системах), смените их владельца на себя.
+   ```
+   sudo chown -R <YOUR-USER>:<YOUR-USER-GROUP> ./frontend/*
+   ```
+
+   Если же вы меняете права для файлов ``backend``, оставьте для папок ``bootstrap`` и ``cache`` права для ``www-data``! Это - группа-пользователь, через которые веб-сервер и PHP-интерпретатор обращаются к Laravel-приложению.
 4. Запустите сервисы.
    ```bash
    docker compose up -d
@@ -77,7 +84,7 @@ curl -L https://github.com/iXorr/laravel-vue-sample/archive/refs/heads/pure-samp
    docker compose run --rm backend php artisan migrate --seed
    ```
 
-   Если возникает ошибка, связанная с правами на файлы и папки, выполните следующие команды.
+   Если в работе Laravel возникает ошибка, связанная с правами на файлы и папки, выполните следующие команды.
    ```bash
    docker compose run --rm backend chown -R www-data:www-data storage bootstrap/cache
    docker compose run --rm backend chmod -R 775 storage bootstrap/cache
