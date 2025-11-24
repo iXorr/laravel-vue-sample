@@ -34,7 +34,7 @@ cp .env.example .env
 ## Использование репозитория
 Поскольку это не полноценное приложение, а всего лишь вспомогательный стартовый пакет, стоит не клонировать его, а скачать и распаковать как обычный архив.
 ```bash
-curl -L https://github.com/iXorr/laravel-vue-sample/archive/refs/heads/main.tar.gz \
+curl -L https://github.com/iXorr/laravel-vue-sample/archive/refs/heads/pure-sample.tar.gz \
   | tar -xz --strip-components=1
 ```
 
