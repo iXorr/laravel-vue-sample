@@ -51,11 +51,16 @@ curl -L https://github.com/iXorr/laravel-vue-sample/archive/refs/heads/pure-samp
    docker compose run --rm frontend npm create vite . 
    ```
    При создании проектов должны появиться и зависимости, но проверьте их наличие (папки ``node_modules`` и ``vendor``).
-3. Запустите сервисы.
+
+   Также, можно добавлять и свои зависимости.
+   ```bash
+   docker compose run --rm frontend npm install --dev vue-router
+   ```
+4. Запустите сервисы.
    ```bash
    docker compose up -d
    ```
-4. Когда все сервисы запущены, подготовьте бэкенд к работе. 
+5. Когда все сервисы запущены, подготовьте бэкенд к работе. 
 
    Вам нужно настроить окружение базы данных для Laravel. В папке ``backend`` скопируйте файл ``.env`` из ``.env.example`` и внесите в него следующие изменения.
    ```
