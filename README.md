@@ -45,16 +45,19 @@ cp .env.example .env
    ```bash
    docker compose build
    ```
-2. Скачайте в папки ``backend`` и ``frontend`` фреймворки нужных вам версий.
+2. Удалите из папок ``backend`` и ``frontend`` файлы ``.gitkeep``, а затем - скачивайте фреймворки нужных вам версий.
    ```bash
    docker compose run --rm backend composer create-project laravel/laravel:^10.x .
    docker compose run --rm frontend npm create vite . 
    ```
    
-   ИЛИ склонируйте в них, перед этим удалив ``.gitkeep``, репозитории уже готовых проектов и установите зависимости.
+   ИЛИ склонируйте в них репозитории уже готовых проектов и установите зависимости.
    ```
    git clone <PROJECT-LINK> backend
    docker compose run --rm backend composer install
+
+   git clone <PROJECT-LINK> frontend
+   docker compose run --rm backend npm install
    ```
 
 3. Также, можно добавлять и свои зависимости.
@@ -77,7 +80,7 @@ cp .env.example .env
    DB_PASSWORD=admin # docker db conf
    ```
 
-   Далее, сгенерируйте ключ и произведи миграции, если последнее необходимо.
+   Далее, сгенерируйте ключ и произведите миграции, если последнее необходимо.
    ```bash
    docker compose run --rm backend php artisan key:generate
    docker compose run --rm backend php artisan migrate --seed
