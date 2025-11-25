@@ -79,6 +79,8 @@ cp .env.example .env
    DB_USERNAME=admin # docker db conf
    DB_PASSWORD=admin # docker db conf
    ```
+   
+   Также обращайте внимание на драйвер для сессий: с 11-й версии Laravel по умолчанию использует базу данных, но миграции для соответствующей таблицы нет.
 
    Удостоверьтесь, что сгенерирован ``APP_KEY`` и произведены миграции. Иначе, воспользуйтесь этими командами.
    ```bash
@@ -86,15 +88,15 @@ cp .env.example .env
    docker compose run --rm backend php artisan migrate --seed
    ```
 
-6. Если на какие-то из установленных папок у вас нет разрешения (что часто бывает в linux-системах), смените их владельца на себя.
-   ```
-   sudo chown -R <YOUR-USER>:<YOUR-USER-GROUP> ./frontend/*
-   ```
-
-   Если же вы меняете права для файлов ``backend``, оставьте для папок ``bootstrap`` и ``cache`` права для ``www-data``! Это - группа-пользователь, через которые веб-сервер и PHP-интерпретатор обращаются к Laravel-приложению.
-
-   Если в работе Laravel возникает ошибка, связанная с правами на файлы и папки, выполните следующие команды.
+   И, наконец, дайте системе права для работы с папками, где сохраняются медиа-файлы или кэш.
    ```bash
    docker compose run --rm backend chown -R www-data:www-data storage bootstrap/cache
    docker compose run --rm backend chmod -R 775 storage bootstrap/cache
    ```
+
+7. Если на какие-то из установленных папок у вас нет разрешения (что часто бывает в linux-системах), смените их владельца на себя.
+   ```
+   sudo chown -R <YOUR-USER>:<YOUR-USER-GROUP> ./frontend/*
+   ```
+
+   Но аккуратнее с папками ``backend/bootstrap/cache`` и ``backend/storage``: их владельцем должен быть ``www-data``! Это - группа-пользователь, через которые веб-сервер и PHP-интерпретатор обращаются к Laravel-приложению.
