@@ -80,7 +80,7 @@ cp .env.example .env
    DB_PASSWORD=admin # docker db conf
    ```
 
-   Далее, сгенерируйте ключ и произведите миграции, если последнее необходимо.
+   Удостоверьтесь, что сгенерирован ``APP_KEY`` и произведены миграции. Иначе, воспользуйтесь этими командами.
    ```bash
    docker compose run --rm backend php artisan key:generate
    docker compose run --rm backend php artisan migrate --seed
