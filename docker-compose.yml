@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   db:
-    container_name: db
+    container_name: ${APP_ID:-app}_db
     build: 
       context: ./services/mysql
     ports:
@@ -16,7 +16,7 @@ services:
       - ./services/mysql/data:/var/lib/mysql
 
   backend:
-    container_name: backend
+    container_name: ${APP_ID:-app}_backend
     build: 
       context: .
       dockerfile: ./services/php/Dockerfile
@@ -24,9 +24,11 @@ services:
       - ./backend:/var/www/html
     depends_on:
       - db
+    environment:
+      DB_HOST: ${APP_ID:-app}_db
 
   frontend:
-    container_name: frontend
+    container_name: ${APP_ID:-app}_frontend
     build:
       context: .
       dockerfile: ./services/npm/Dockerfile
@@ -36,14 +38,16 @@ services:
       - ./frontend:/app
 
   web:
-    container_name: web
+    container_name: ${APP_ID:-app}_web
     build: 
       context: ./services/nginx
     ports:
       - ${HOST_NGINX_PORT:-80}:80
+    environment:
+      - APP_ID=${APP_ID:-app}
     volumes:
       - ./backend:/var/www/html
-      - ./services/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./services/nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
     depends_on:
       - backend
       - frontend
