@@ -10,7 +10,7 @@ server {
     }
     
     location / {
-        proxy_pass http://frontend:5173; # docker container name
+        proxy_pass http://${APP_ID}_frontend:5173; # docker container name
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
@@ -20,7 +20,7 @@ server {
 
     location ~ \.php$ {
         include fastcgi_params;
-        fastcgi_pass backend:9000; # docker container name
+        fastcgi_pass ${APP_ID}_backend:9000; # docker container name
         fastcgi_index index.php;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     }

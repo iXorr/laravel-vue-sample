@@ -40,27 +40,34 @@ curl -L https://github.com/iXorr/laravel-vue-sample/archive/refs/heads/pure-samp
 cp .env.example .env
 ```
 
+## Переопределение названий служб
+
+Имена контейнеров могут конфликтовать между собой, поэтому в том же файле окружения есть переменная ``APP_ID``. Она добавляет префикс для каждых новых создающихся служб.
+
 ## Начало работы
 1. Эта версия стартового пакета без предустановленных пресетов. Поэтому, для начала просто забилдите проект.
    ```bash
    docker compose build
    ```
-2. Удалите из папок ``backend`` и ``frontend`` файлы ``.gitkeep``, а затем - скачивайте фреймворки нужных вам версий.
+2. Удалите из папок ``backend`` и ``frontend`` файлы ``.gitkeep``. Затем - скачивайте фреймворки нужных вам версий.
    ```bash
-   docker compose run --rm backend composer create-project laravel/laravel:^10.x .
+   docker compose run --rm backend composer create-project laravel/laravel:^10 .
    docker compose run --rm frontend npm create vite . 
    ```
    
-   ИЛИ склонируйте в них репозитории уже готовых проектов и установите зависимости.
+   Или склонируйте в них репозитории уже готовых проектов.
    ```
    git clone <PROJECT-LINK> backend
-   docker compose run --rm backend composer install
-
    git clone <PROJECT-LINK> frontend
-   docker compose run --rm backend npm install
    ```
 
-3. Также, можно добавлять и свои зависимости.
+   Не забудьте установить зависимости!
+   ```
+   docker compose run --rm backend composer install
+   docker compose run --rm frontend npm install
+   ```
+
+3. Также, можно добавлять и свои зависимости: как для фронтенда, так и для бэкенда.
    ```bash
    docker compose run --rm frontend npm install --dev vue-router
    ```
@@ -74,7 +81,7 @@ cp .env.example .env
    Вам нужно настроить окружение базы данных для Laravel. В папке ``backend`` скопируйте файл ``.env`` из ``.env.example`` и внесите в него следующие изменения.
    ```
    DB_CONNECTION=mysql
-   DB_HOST=db # docker container name
+   DB_HOST=${DB_HOST} # docker container name
    DB_DATABASE=app_db # docker db conf
    DB_USERNAME=admin # docker db conf
    DB_PASSWORD=admin # docker db conf
