@@ -4,12 +4,10 @@
 ![MySQL](https://img.shields.io/badge/MySQL-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
 ![PHP](https://img.shields.io/badge/PHP-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white)
 ![Laravel](https://img.shields.io/badge/Laravel-%23FF2D20.svg?style=for-the-badge&logo=laravel&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-%236DA55F.svg?style=for-the-badge&logo=node.js&logoColor=white)
-![Vue.js](https://img.shields.io/badge/Vue.js-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
 ![Nginx](https://img.shields.io/badge/Nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)
 
 ## Описание
-Это - стартовый набор Docker-сервисов для разработки и запуска REST API приложения. Структура включает в себя предопределенные конфигурации, и вся разработка происходит, по сути, в двух папках: ``backend`` и ``frontend``.
+Это - стартовый набор Docker-сервисов для разработки и запуска REST API приложения. Структура включает в себя предопределенные конфигурации для бэкенда, и вся разработка происходит в соответствующей папке - ``backend``.
 
 ## Требования
 - Linux или WSL2 (файловая система Windows сильно замедляет работу Docker).
@@ -18,11 +16,11 @@
 ## Использование репозитория
 Поскольку это не полноценное приложение, а всего лишь вспомогательный стартовый пакет, стоит не клонировать его, а скачать и распаковать как обычный архив.
 ```bash
-curl -L https://github.com/iXorr/laravel-vue-sample/archive/refs/heads/pure-sample.tar.gz \
+curl -L https://github.com/iXorr/laravel-vue-sample/archive/refs/heads/only-backend.tar.gz \
   | tar -xz --strip-components=1
 ```
 
-И уже внутри папок ``backend`` и ``frontend`` или инициализировать новые репозитории, или использовать уже существующие.
+И уже внутри папки ``backend`` или инициализировать новый репозиторий, или использовать уже существующий.
 
 ## Версии служб
 Корректируйте версию определённой службы в соответствующем Dockerfile (например, при изменении версии PHP нужно перейти в ``services/php/Dockerfile``). Также, не забудьте, что версии фреймворков зависят от версии служб: так, для PHP 8.1 нужно установить Laravel 10.x.
@@ -49,27 +47,24 @@ cp .env.example .env
    ```bash
    docker compose build
    ```
-2. Удалите из папок ``backend`` и ``frontend`` файлы ``.gitkeep``. Затем - скачивайте фреймворки нужных вам версий.
+2. Удалите из папки ``backend`` файл ``.gitkeep``. Затем - скачивайте фреймворк нужной вам версий.
    ```bash
    docker compose run --rm backend composer create-project laravel/laravel:^10 .
-   docker compose run --rm frontend npm create vite . 
    ```
    
    Или склонируйте в них репозитории уже готовых проектов.
    ```
    git clone <PROJECT-LINK> backend
-   git clone <PROJECT-LINK> frontend
    ```
 
    Удостоверьтесь, что все зависимости установлены. Иначе, выполните эти команды.
    ```
    docker compose run --rm backend composer install
-   docker compose run --rm frontend npm install
    ```
 
 3. Также, можно добавлять и свои зависимости: как для фронтенда, так и для бэкенда.
    ```bash
-   docker compose run --rm frontend npm install --dev vue-router
+   docker compose run --rm backend composer require barryvdh/laravel-debugbar --dev 
    ```
 
 4. Запустите сервисы.

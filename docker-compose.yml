@@ -27,16 +27,6 @@ services:
     environment:
       DB_HOST: ${APP_ID:-app}_db
 
-  frontend:
-    container_name: ${APP_ID:-app}_frontend
-    build:
-      context: .
-      dockerfile: ./services/npm/Dockerfile
-    ports:
-      - ${HOST_VITE_PORT:-5173}:5173
-    volumes:
-      - ./frontend:/app
-
   web:
     container_name: ${APP_ID:-app}_web
     build: 
@@ -50,4 +40,3 @@ services:
       - ./services/nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
     depends_on:
       - backend
-      - frontend
