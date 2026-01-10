@@ -1,0 +1,4 @@
+[submodule "backend"]
+	path = backend
+	url = git@github.com:iXorr/lanver-app.git
+	branch = backend
